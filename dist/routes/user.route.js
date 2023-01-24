@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const user_controller_1 = __importDefault(require("../controllers/user.controller"));
+const authJWT_1 = require("../middelware/authJWT");
+const router = (0, express_1.Router)();
+router.get('/', user_controller_1.default.getAllUsers);
+router.get('/getUser/:id', user_controller_1.default.getUser);
+router.get('/getUserByEmail/:email', user_controller_1.default.getUserByEmail);
+router.get('/getUserByUsername/:username', user_controller_1.default.getUserByUsername);
+router.get('/getUserById/:id', user_controller_1.default.getUser);
+router.post('/new/:userId', user_controller_1.default.newUser);
+router.put('/update/:id', user_controller_1.default.updateUser);
+router.delete('/delete/:id/:userId', [authJWT_1.isAdmin], user_controller_1.default.deleteUser);
+router.post('/login', user_controller_1.default.LogIn);
+router.get('/getTasks/:id', user_controller_1.default.getTasks);
+router.put('/addPermission/:id/:userId', [authJWT_1.isAdmin], user_controller_1.default.addPermission);
+exports.default = router;
